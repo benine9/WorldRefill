@@ -161,6 +161,11 @@ of the config has been moved to Config.cs.
 
 	* InfChests3 Support has been added! on generation it will now automatically send the chests generated to the db!
 
+* 2.1.3
+	* Fixed Issue Where InfChests3 support would not work for SQLite.
+	
+	* Removed Debug information that i accidentally left in :P
+
 	
 
 	

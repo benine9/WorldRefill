@@ -142,7 +142,7 @@ of the config has been moved to Config.cs.
 
 	* Fixed issue where spawning pyramid would get you stuck.
 
-*2.1.2
+* 2.1.2
 	* Floating Islands Tile Validation has been added, this is based on natural generation so you would need to be around the same Y-level as other islands
 
 	* Skylake has been added to islands!

@@ -1,6 +1,6 @@
 ﻿using TShockAPI;
 using System.Data;
-using Mono.Data.Sqlite;
+using Microsoft.Data.Sqlite;
 using MySql.Data.MySqlClient;
 using System.IO;
 using System.Threading.Tasks;
@@ -34,10 +34,10 @@ namespace WorldRefill
                     case "mysql":
                         MySqlConnectionStringBuilder ConnString = new MySqlConnectionStringBuilder
                         {
-                            Server = TShock.Config.MySqlHost,
-                            Database = TShock.Config.MySqlDbName,
-                            UserID = TShock.Config.MySqlUsername,
-                            Password = TShock.Config.MySqlPassword
+                            Server = TShock.Config.Settings.MySqlHost,
+                            Database = TShock.Config.Settings.MySqlDbName,
+                            UserID = TShock.Config.Settings.MySqlUsername,
+                            Password = TShock.Config.Settings.MySqlPassword
                         };
 
                         ChestDB = new MySqlConnection(ConnString.ToString());
@@ -48,8 +48,7 @@ namespace WorldRefill
 
                         SqliteConnectionStringBuilder SqliteConnString = new SqliteConnectionStringBuilder
                         {
-                            DataSource = Path.Combine(TShock.SavePath, "InfChests3.sqlite"),
-                            Version = 3
+                            DataSource = Path.Combine(TShock.SavePath, "InfChests3.sqlite")
                         };
                         ChestDB = new SqliteConnection(SqliteConnString.ToString()); ;
 

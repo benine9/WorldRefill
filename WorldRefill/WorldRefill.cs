@@ -1,7 +1,6 @@
-﻿using Mono.Data.Sqlite;
+﻿using Microsoft.Data.Sqlite;
 using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
-using OTAPI.Tile;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -23,7 +22,6 @@ using System.Security.Cryptography;
 using Terraria.GameContent.Generation;
 using System.Threading.Tasks;
 using OTAPI;
-using System.Diagnostics.Eventing.Reader;
 using System.Diagnostics.Tracing;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -567,11 +565,11 @@ namespace WorldRefill
 
                         WorldGen.SetupStatueList();
 
-                        List<Point16> statuelist = WorldGen.statueList.ToList(); //re-writing statuelist to include turtle and owl statues.
+                        List<Point16> statuelist = GenVars.statueList.ToList(); //re-writing statuelist to include turtle and owl statues.
                         statuelist.Add(new Point16(TileID.Statues, 76));
                         statuelist.Add(new Point16(TileID.Statues, 79));
                         statuelist.Add(new Point16(TileID.BoulderStatue, 0));
-                        WorldGen.statueList = statuelist.ToArray();
+                        GenVars.statueList = statuelist.ToArray();
 
 
 
@@ -596,7 +594,7 @@ namespace WorldRefill
                             int stindex = 0;
 
                             Dictionary<string, Point16> statues = new Dictionary<string, Point16>();
-                            foreach (Point16 statue in WorldGen.statueList)
+                            foreach (Point16 statue in GenVars.statueList)
                             {
 
                                 statues.Add(StoredLists.getStatueList()[stindex], statue);

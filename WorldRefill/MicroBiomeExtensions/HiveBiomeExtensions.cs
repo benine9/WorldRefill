@@ -29,8 +29,10 @@ namespace WorldRefill.MicroBiomeExtensions
                 {
                     Vector2 vector2 = position1;
                     int num2 = WorldGen.genRand.Next(2, 5);
+                    ReLogic.Utilities.Vector2D e = new ReLogic.Utilities.Vector2D();
                     for (int index3 = 0; index3 < num2; ++index3)
-                        vector2 = CreateHiveTunnel((int)position1.X, (int)position1.Y, WorldGen.genRand);
+                    e = CreateHiveTunnel((int)position1.X, (int)position1.Y, WorldGen.genRand);
+                    vector2 = new Vector2(Convert.ToInt32(e.X), Convert.ToInt32(e.Y));
                     position1 = vector2;
                     numArray1[index1] = (int)position1.X;
                     numArray2[index1] = (int)position1.Y;
@@ -64,7 +66,7 @@ namespace WorldRefill.MicroBiomeExtensions
                         }
                     }
                 }
-                CreateStandForLarva(position1);
+                CreateStandForLarva(new ReLogic.Utilities.Vector2D(position1.X, position1.Y));
                 WorldGen.PlaceTile((int)position1.X, (int)position1.Y, 231, true, false, -1, 0);
                 if (WorldGen.drunkWorldGen)
                 {
@@ -75,7 +77,7 @@ namespace WorldRefill.MicroBiomeExtensions
                         position2.Y += (float)WorldGen.genRand.Next(-50, 51);
                         if (WorldGen.InWorld((int)position2.X, (int)position2.Y, 0) && (double)Vector2.Distance(position1, position2) > 10.0 && (!Main.tile[(int)position2.X, (int)position2.Y].active() && Main.tile[(int)position2.X, (int)position2.Y].wall == (ushort)86))
                         {
-                            CreateStandForLarva(position2);
+                            CreateStandForLarva(new ReLogic.Utilities.Vector2D(position2.X, position2.Y));
                             WorldGen.PlaceTile((int)position2.X, (int)position2.Y, 231, true, false, -1, 0);
                             break;
                         }

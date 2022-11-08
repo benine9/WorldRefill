@@ -1,7 +1,6 @@
-﻿using Mono.Data.Sqlite;
+﻿using Microsoft.Data.Sqlite;
 using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
-using OTAPI.Tile;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -11,6 +10,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using TShockAPI;
+using ReLogic.Utilities;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using TerrariaApi.Server;
@@ -302,8 +302,8 @@ namespace WorldRefill
 
                     int tryX = WorldGen.genRand.Next(20, Main.maxTilesX - 20);
                     int tryY = WorldGen.genRand.Next((int)Main.rockLayer, Main.UnderworldLayer);
-                    int tryType = WorldGen.genRand.Next(0, WorldGen.statueList.Count() - 1);
-                    Point16 randstatue = WorldGen.statueList[tryType];
+                    int tryType = WorldGen.genRand.Next(0, GenVars.statueList.Count() - 1);
+                    Point16 randstatue = GenVars.statueList[tryType];
 
 
 
@@ -352,7 +352,7 @@ namespace WorldRefill
 
                     int tryX = WorldGen.genRand.Next(20, Main.maxTilesX - 20);
                     int tryY = WorldGen.genRand.Next((int)Main.rockLayer, Main.UnderworldLayer);
-                    int tryType = WorldGen.genRand.Next(0, WorldGen.statueList.Count() - 1);
+                    int tryType = WorldGen.genRand.Next(0, GenVars.statueList.Count() - 1);
 
 
 
@@ -887,25 +887,23 @@ namespace WorldRefill
                                 return cY;
 
                             };
-                            WorldGen.SpreadGrassDirect(posX, cloudsurface());
+                            WorldGen.SpreadGrass(posX, cloudsurface());
                             
                         }
                         
                            
                         
-                        WorldGen.IslandHouse(posX, posY - 6, WorldGen.floatingIslandStyle[WorldGen.genRand.Next(0, WorldGen.floatingIslandStyle.Count() - 1)]);
-
+                        WorldGen.IslandHouse(posX, posY - 6, GenVars.floatingIslandStyle[WorldGen.genRand.Next(0, GenVars.floatingIslandStyle.Count() - 1)]);
                         break;
                     case 1:
                         WorldGen.DesertCloudIsland(posX, posY);
-                        WorldGen.IslandHouse(posX, posY - 6, WorldGen.floatingIslandStyle[WorldGen.genRand.Next(0, WorldGen.floatingIslandStyle.Count() - 1)]);
-
+                        WorldGen.IslandHouse(posX, posY - 6, GenVars.floatingIslandStyle[WorldGen.genRand.Next(0, GenVars.floatingIslandStyle.Count() - 1)]);
                         break;
 
                     case 2:
 
                         WorldGen.SnowCloudIsland(posX, posY);
-                        WorldGen.IslandHouse(posX, posY - 6, WorldGen.floatingIslandStyle[WorldGen.genRand.Next(0, WorldGen.floatingIslandStyle.Count() - 1)]);
+                        WorldGen.IslandHouse(posX, posY - 6, GenVars.floatingIslandStyle[WorldGen.genRand.Next(0, GenVars.floatingIslandStyle.Count() - 1)]);
 
 
                         break;
@@ -1003,7 +1001,7 @@ namespace WorldRefill
         public static Task AsyncGenerateChests(int amount)
         {
             WorldRefill.isTaskRunning = true;
-            AsyncRemoveEmptyChests();
+          //  AsyncRemoveEmptyChests();
             return Task.Run(() =>
             {
                 int realcount = 0;
@@ -1032,7 +1030,7 @@ namespace WorldRefill
 
                         if (WorldGen.AddBuriedChest(tryX, tryY, contain, true, 1))
                         {
-
+                            Console.WriteLine(tryX + " " + tryY);
                             realcount++;
                             if (realcount == amount) break;
                         }
@@ -1117,27 +1115,44 @@ namespace WorldRefill
 
         private static void FinishGen()
         {
+            Console.WriteLine("1");
             WorldRefill.isTaskRunning = false;
-            
+            Console.WriteLine("2");
+
             if (WorldRefill.realcount != 0)
             {
+                Console.WriteLine("3");
+
                 foreach (TSPlayer player in TShock.Players)
                 {
+                    Console.WriteLine("4");
+
                     if (player != null)
                     {
                         NetMessage.PlayNetSound(new NetMessage.NetSoundInfo(player.TPlayer.position, 1, 0, 10, -16));
                         
                     }
+                    Console.WriteLine("5");
+
                 }
             }
+            Console.WriteLine("6");
+
             if (WorldRefill.config.UseInfiniteChests && Main.chest.Where(p => p != null).Count() > 0)
             {
+
                 InfChestsDatabase WRConn = new InfChestsDatabase();
+
                 WRConn.AddChests();
+
                 WRConn.Dispose();
+
                 TShock.Utils.SaveWorld();
+
             }
-            
+            Console.WriteLine("8");
+
+
         }
 
 

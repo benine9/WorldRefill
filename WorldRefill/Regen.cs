@@ -969,7 +969,9 @@ namespace WorldRefill
                                     found = true;
                             if (found == false)
                             {
-
+                                if (WorldRefill.IsProtected(Main.chest[x].x, Main.chest[x].y)){
+                                    continue;
+                                }
                                 
                                 WorldGen.KillTile(Main.chest[x].x, Main.chest[x].y, noItem: true);
                                 Main.chest[x] = null;
@@ -1001,7 +1003,7 @@ namespace WorldRefill
         public static Task AsyncGenerateChests(int amount)
         {
             WorldRefill.isTaskRunning = true;
-          //  AsyncRemoveEmptyChests();
+            AsyncRemoveEmptyChests();
             return Task.Run(() =>
             {
                 int realcount = 0;
@@ -1030,7 +1032,6 @@ namespace WorldRefill
 
                         if (WorldGen.AddBuriedChest(tryX, tryY, contain, true, 1))
                         {
-                            Console.WriteLine(tryX + " " + tryY);
                             realcount++;
                             if (realcount == amount) break;
                         }

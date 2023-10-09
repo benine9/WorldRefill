@@ -46,7 +46,7 @@ namespace WorldRefill
                     {
                         if (WorldGen.AddLifeCrystal(tryX,tryY))
                         {
-                            Console.WriteLine($"A crystal was added at X: {tryX} Y: {tryY}");
+                            // Console.WriteLine($"A crystal was added at X: {tryX} Y: {tryY}");
                             realcount++;
                             //Determine if enough Objects have been generated
                             if (realcount == amount) break;
@@ -1097,28 +1097,22 @@ namespace WorldRefill
 
         private static void FinishGen()
         {
-            Console.WriteLine("1");
             WorldRefill.isTaskRunning = false;
-            Console.WriteLine("2");
 
             if (WorldRefill.realcount != 0)
             {
-                Console.WriteLine("3");
 
                 foreach (TSPlayer player in TShock.Players)
                 {
-                    Console.WriteLine("4");
 
                     if (player != null)
                     {
                         NetMessage.PlayNetSound(new NetMessage.NetSoundInfo(player.TPlayer.position, 1, 0, 10, -16));
                         
                     }
-                    Console.WriteLine("5");
 
                 }
             }
-            Console.WriteLine("6");
 
 
         }

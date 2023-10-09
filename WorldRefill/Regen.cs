@@ -34,18 +34,19 @@ namespace WorldRefill
         public static Task AsyncGenLifeCrystals(short amount)
         {
             WorldRefill.isTaskRunning = true;
-            int tryX = WorldGen.genRand.Next(1, Main.maxTilesX);
-            int tryY = WorldGen.genRand.Next((int)Main.rockLayer, (int)(Main.UnderworldLayer + 100));
+           
             int realcount = 0;
             return Task.Run(() =>
             {
                 for (int trycount = 0; trycount < WorldRefill.config.GenerationMaxTries; trycount++)
                 {
+                    int tryX = WorldGen.genRand.Next(1, Main.maxTilesX);
+                    int tryY = WorldGen.genRand.Next((int)Main.rockLayer, (int)(Main.UnderworldLayer + 100));
                     if (!WorldRefill.IsProtected(tryX, tryY))
                     {
                         if (WorldGen.AddLifeCrystal(tryX,tryY))
                         {
-
+                            Console.WriteLine($"A crystal was added at X: {tryX} Y: {tryY}");
                             realcount++;
                             //Determine if enough Objects have been generated
                             if (realcount == amount) break;
@@ -938,11 +939,6 @@ namespace WorldRefill
             WorldRefill.isTaskRunning = true;
             WorldRefill.realcount = 1;
            
-                if (WorldRefill.config.UseInfiniteChests)
-                {
-                    InfChestsDatabase WRConn = new InfChestsDatabase();
-                    WRConn.DeleteChests(Main.worldID);
-                }
             
             WorldGen.clearWorld();
            
@@ -955,9 +951,6 @@ namespace WorldRefill
             {
                 WorldRefill.isTaskRunning = true;
                 
-
-                if (!WorldRefill.config.UseInfiniteChests)
-                {
                     for (int x = 0; x < Main.chest.Length; x++)
                     {
                         if (Main.chest[x] != null)
@@ -983,20 +976,8 @@ namespace WorldRefill
                     }
 
 
-                }
-                else
-                {
-                    InfChestsDatabase WRConn = new InfChestsDatabase();
+                
 
-                    List<Point> EmpChestCoords = WRConn.PruneChests().Result;
-                    foreach (Point point in EmpChestCoords)
-                    {
-                        
-                        WorldGen.KillTile(point.X, point.Y, noItem: true);
-                        
-                    }
-
-                }
                 
             });
         }
@@ -1138,20 +1119,6 @@ namespace WorldRefill
                 }
             }
             Console.WriteLine("6");
-
-            if (WorldRefill.config.UseInfiniteChests && Main.chest.Where(p => p != null).Count() > 0)
-            {
-
-                InfChestsDatabase WRConn = new InfChestsDatabase();
-
-                WRConn.AddChests();
-
-                WRConn.Dispose();
-
-                TShock.Utils.SaveWorld();
-
-            }
-            Console.WriteLine("8");
 
 
         }

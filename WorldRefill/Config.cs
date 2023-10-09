@@ -73,8 +73,6 @@ namespace WorldRefill
         #endregion
 
         public int GenerationMaxTries = 1000000;
-        public bool UseInfiniteChests = false;
-        public string InfiniteChestsDBType = "sqlite";
 
     }
     public class ConfigFunctions

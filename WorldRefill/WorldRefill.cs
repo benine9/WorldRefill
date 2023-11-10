@@ -1029,7 +1029,7 @@ namespace WorldRefill
                                     Main.ActiveWorldFileData.SetSeed(AdvancedRegen.ProcessSeed(args.Parameters[2]));
                                     await Regen.AsyncGenerateWorld(Main.ActiveWorldFileData._seed);
                                     args.Player.SendSuccessMessage($"[[c/FFFFFF:{Name}]] The World was Successfully Regenerated with Seed {args.Parameters[2]}");
-                                    TSPlayer.All.SendMessage($"[[c/FFFFFF:{Name}]] The World was Successfully Regenerated with Seed {args.Parameters[2]}", 71, 8, 185);
+                                    TSPlayer.All.SendMessage($"[[c/FFFFFF:{Name}]] The World was Successfully Regenerated", 71, 8, 185);
 
                                 }
 

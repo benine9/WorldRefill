@@ -80,9 +80,10 @@ namespace WorldRefill
         {
             #region Gen Commands
             Commands.ChatCommands.Add(new Command("worldrefill.generate", Generate, "generate", "gen")
-            {
-                AllowServer = false,
-            });
+            
+            
+                
+            );
 
 
             #region Commands to Add
